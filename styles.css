@@ -22,7 +22,7 @@ body {
   color: var(--ink);
   background: var(--cream);
 }
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 
 /* language toggle: only show spans matching <html lang> */
