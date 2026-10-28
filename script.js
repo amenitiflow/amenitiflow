@@ -8,36 +8,66 @@ function setLang(lang) {
   try { localStorage.setItem('lang', lang); } catch (e) {}
 }
 
-let saved = null;
-try { saved = localStorage.getItem('lang'); } catch (e) {}
-setLang(saved || (navigator.language.startsWith('pl') ? 'pl' : 'en'));
+function store(key, value) {
+  try { return value === undefined ? localStorage.getItem(key) : localStorage.setItem(key, value); } catch (e) {}
+}
+
+setLang(store('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en'));
 
 document.querySelectorAll('[data-set-lang]').forEach(b =>
   b.addEventListener('click', () => setLang(b.dataset.setLang)));
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const year = document.getElementById('year');
+if (year) year.textContent = new Date().getFullYear();
 
-// Contact form: submit via Formspree without leaving the page
-const form = document.querySelector('.form');
-const status = document.querySelector('.form-status');
+// Forms: submit via Formspree without leaving the page
 const messages = {
   pl: { ok: 'Dziękuję! Wiadomość została wysłana.', err: 'Coś poszło nie tak. Spróbuj ponownie.' },
   en: { ok: 'Thank you! Your message has been sent.', err: 'Something went wrong. Please try again.' }
 };
 
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  const m = messages[document.documentElement.lang];
-  try {
-    const res = await fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { Accept: 'application/json' }
-    });
-    if (!res.ok) throw new Error();
-    form.reset();
-    status.textContent = m.ok;
-  } catch {
-    status.textContent = m.err;
-  }
+document.querySelectorAll('form[data-formspree]').forEach(form => {
+  const status = form.querySelector('.form-status');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const m = messages[document.documentElement.lang];
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      });
+      if (!res.ok) throw new Error();
+      form.reset();
+      if (form.dataset.success) {
+        form.hidden = true;
+        document.getElementById(form.dataset.success).hidden = false;
+        store('giftDone', '1');
+      } else {
+        status.textContent = m.ok;
+      }
+    } catch {
+      status.textContent = m.err;
+    }
+  });
 });
+
+// Free gift pop-up: opens from buttons, or once per visitor after a while
+const gift = document.getElementById('gift');
+if (gift) {
+  const open = () => { if (!gift.open) gift.showModal(); store('giftSeen', '1'); };
+  document.querySelectorAll('[data-open-gift]').forEach(b => b.addEventListener('click', open));
+  gift.querySelector('.gift-close').addEventListener('click', () => gift.close());
+  gift.addEventListener('click', e => { if (e.target === gift) gift.close(); });
+
+  if (!store('giftSeen') && !store('giftDone')) {
+    const auto = () => { if (!store('giftSeen')) open(); };
+    setTimeout(auto, 20000);
+    addEventListener('scroll', function onScroll() {
+      if (scrollY > document.body.scrollHeight * 0.45) {
+        removeEventListener('scroll', onScroll);
+        auto();
+      }
+    });
+  }
+}

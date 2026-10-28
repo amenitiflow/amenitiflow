@@ -95,6 +95,22 @@
     </div>
   </section>
 
+  <section class="gift-band">
+    <img src="images/pdf-cover.jpg" alt="" loading="lazy" width="635" height="900">
+    <div>
+      <p class="eyebrow"><span lang="pl">Prezent dla Ciebie</span><span lang="en">A gift for you</span></p>
+      <h2>
+        <span lang="pl">3 praktyki oddechowe na spokój, energię i równowagę</span>
+        <span lang="en">3 breathing practices for calm, energy and balance</span>
+      </h2>
+      <p>
+        <span lang="pl">Pobierz bezpłatny przewodnik PDF z ćwiczeniami z jogi kundalini, do których możesz wracać każdego dnia - w domu, w pracy i przed snem.</span>
+        <span lang="en">Download a free PDF guide with Kundalini yoga exercises you can return to every day - at home, at work and before sleep.</span>
+      </p>
+      <button type="button" class="btn" data-open-gift><span lang="pl">Pobierz za darmo</span><span lang="en">Get it free</span></button>
+    </div>
+  </section>
+
   <section class="quote" style="background-image: url('images/sea.jpg')">
     <blockquote>
       <p>
@@ -139,7 +155,8 @@
       <span lang="pl">Masz pytanie albo chcesz zapisać się na zajęcia lub warsztaty? Zostaw wiadomość - odpiszę najszybciej, jak to możliwe.</span>
       <span lang="en">Have a question, or want to book a class or workshop? Leave a message and I'll get back to you soon.</span>
     </p>
-    <form class="form" action="https://formspree.io/f/xwllonvy" method="POST">
+    <form class="form" action="https://formspree.io/f/xwllonvy" method="POST" data-formspree>
+      <input type="hidden" name="_subject" value="Ameniti Flow - nowa wiadomość">
       <label>
         <span lang="pl">Imię</span><span lang="en">Name</span>
         <input type="text" name="name" required autocomplete="name">
@@ -161,6 +178,10 @@
         <span lang="pl">Wiadomość</span><span lang="en">Message</span>
         <textarea name="message" rows="5" required></textarea>
       </label>
+      <label class="check full">
+        <input type="checkbox" name="privacy" value="accepted" required>
+        <span><span lang="pl">Akceptuję <a href="privacy.html" target="_blank">politykę prywatności</a>.*</span><span lang="en">I accept the <a href="privacy.html" target="_blank">privacy policy</a>.*</span></span>
+      </label>
       <button class="btn full" type="submit"><span lang="pl">Wyślij</span><span lang="en">Send</span></button>
       <p class="form-status full" role="status" aria-live="polite"></p>
     </form>
@@ -168,9 +189,60 @@
 
 </main>
 
+<dialog id="gift" class="gift" aria-labelledby="gift-title">
+  <button type="button" class="gift-close" aria-label="Zamknij / Close">×</button>
+  <img class="gift-img" src="images/breath.jpg" alt="">
+  <div class="gift-body">
+    <form class="gift-form" action="https://formspree.io/f/xwllonvy" method="POST" data-formspree data-success="gift-thanks">
+      <input type="hidden" name="_subject" value="Ameniti Flow - nowa osoba pobrała ćwiczenia oddechowe">
+      <input type="hidden" name="source" value="Prezent: ćwiczenia oddechowe (PDF)">
+      <p class="eyebrow"><span lang="pl">Bezpłatny przewodnik PDF</span><span lang="en">Free PDF guide</span></p>
+      <h2 id="gift-title">
+        <span lang="pl">Wróć do siebie <em>z każdym oddechem</em></span>
+        <span lang="en">Come home to yourself <em>with every breath</em></span>
+      </h2>
+      <p>
+        <span lang="pl">Pobierz 3 praktyki oddechowe z jogi kundalini - na spokój, energię i równowagę.</span>
+        <span lang="en">Get 3 Kundalini breathing practices - for calm, energy and balance.</span>
+      </p>
+      <div class="gift-fields">
+        <label>
+          <span><span lang="pl">Imię</span><span lang="en">Name</span>*</span>
+          <input type="text" name="name" required autocomplete="given-name">
+        </label>
+        <label>
+          <span>Email*</span>
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+      </div>
+      <label class="check">
+        <input type="checkbox" name="privacy" value="accepted" required>
+        <span><span lang="pl">Akceptuję <a href="privacy.html" target="_blank">politykę prywatności</a>.*</span><span lang="en">I accept the <a href="privacy.html" target="_blank">privacy policy</a>.*</span></span>
+      </label>
+      <label class="check">
+        <input type="checkbox" name="newsletter" value="yes">
+        <span><span lang="pl">Chcę otrzymywać e-mailem informacje o zajęciach i warsztatach Ameniti Flow.</span><span lang="en">I'd like to receive emails about Ameniti Flow classes and workshops.</span></span>
+      </label>
+      <button class="btn" type="submit"><span lang="pl">Pobierz ćwiczenia</span><span lang="en">Get the exercises</span></button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+    <div id="gift-thanks" class="gift-thanks" hidden>
+      <p class="eyebrow"><span lang="pl">Dziękuję!</span><span lang="en">Thank you!</span></p>
+      <h2><span lang="pl">Twój prezent <em>jest gotowy</em></span><span lang="en">Your gift <em>is ready</em></span></h2>
+      <p>
+        <span lang="pl">Zacznij od jednej praktyki dziennie - nawet 3 minuty robią różnicę.</span>
+        <span lang="en">Start with one practice a day - even 3 minutes makes a difference.</span>
+      </p>
+      <a class="btn" lang="pl" href="downloads/ameniti-flow-oddech-pl.pdf" download>Pobierz PDF</a>
+      <a class="btn" lang="en" href="downloads/ameniti-flow-breathing-en.pdf" download>Download PDF</a>
+    </div>
+  </div>
+</dialog>
+
 <footer class="footer">
   <p class="brand">Ameniti Flow</p>
   <p>© <span id="year">2026</span> Aleksandra Migała</p>
+  <p class="footer-links"><a href="privacy.html"><span lang="pl">Polityka prywatności</span><span lang="en">Privacy policy</span></a></p>
 </footer>
 
 <script src="script.js"></script>

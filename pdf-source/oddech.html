@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Ameniti Flow - Oddech</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --forest: #1f2a1e; --sand: #efe6d8; --cream: #f8f3eb;
+    --clay: #b8652f; --ink: #2b2620; --muted: #6d6458;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-family: "Jost", sans-serif; font-weight: 300; color: var(--ink); font-size: 13pt; line-height: 1.65; font-variant-numeric: lining-nums; }
+  html[lang="pl"] [lang="en"], html[lang="en"] [lang="pl"] { display: none; }
+
+  .page { width: 210mm; height: 297mm; position: relative; overflow: hidden; page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .serif { font-family: "Cormorant Garamond", serif; font-weight: 400; font-variant-numeric: lining-nums; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .25em; font-size: 8.5pt; font-weight: 500; color: var(--clay); }
+
+  /* cover */
+  .cover { background: var(--forest) url("../images/sea.jpg") center / cover; color: #fff; }
+  .cover::before { content: ""; position: absolute; inset: 0; background: linear-gradient(rgba(31,42,30,.35), rgba(31,42,30,.05) 45%, rgba(31,42,30,.7)); }
+  .frame { position: absolute; inset: 12mm; border: 1px solid rgba(239,230,216,.6); }
+  .cover-inner { position: absolute; inset: 12mm; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 26mm 18mm 22mm; }
+  .cover .brand { font-size: 22pt; letter-spacing: .08em; }
+  .cover h1 { font-size: 44pt; line-height: 1.05; margin: auto 0 6mm; }
+  .cover h1 em { color: #f1c79b; }
+  .cover .sub { font-size: 12.5pt; max-width: 120mm; margin: 0 auto; color: var(--sand); }
+  .cover .eyebrow { color: #f1c79b; margin-top: 14mm; }
+
+  /* exercise pages */
+  .ex { background: var(--cream); padding: 22mm 22mm 18mm; }
+  .ex .num { position: absolute; top: 6mm; right: 14mm; font-size: 96pt; line-height: 1; color: rgba(184,101,47,.13); }
+  .ex h2 { font-size: 42pt; line-height: 1.05; margin: 2mm 0 1mm; color: var(--forest); }
+  .ex .name { font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 17pt; color: var(--clay); margin: 0 0 8mm; }
+  .ex .intro { margin: 0 0 9mm; }
+  .steps { list-style: none; padding: 0; margin: 0 0 9mm; counter-reset: s; }
+  .steps li { counter-increment: s; position: relative; padding-left: 12mm; margin-bottom: 4.5mm; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: .5mm; width: 7.5mm; height: 7.5mm; border-radius: 50%; background: var(--forest); color: var(--sand); font-size: 9.5pt; font-weight: 500; display: grid; place-items: center; }
+  .steps b, .info b { font-weight: 500; }
+  .diagram { display: flex; align-items: center; gap: 8mm; background: var(--sand); border-radius: 3mm; padding: 6mm 9mm; margin: 0 0 8mm; }
+  .diagram svg { flex: none; width: 92mm; height: auto; }
+  .diagram .time { font-family: "Cormorant Garamond", serif; font-size: 21pt; font-variant-numeric: lining-nums; line-height: 1.2; color: var(--forest); }
+  .diagram .time small { display: block; font-family: "Jost", sans-serif; font-size: 8.5pt; letter-spacing: .2em; text-transform: uppercase; color: var(--clay); }
+  .info { display: grid; grid-template-columns: 1fr 1fr; gap: 9mm; }
+  .info h3 { font-family: "Jost", sans-serif; font-size: 9pt; letter-spacing: .2em; text-transform: uppercase; font-weight: 500; color: var(--clay); margin: 0 0 1.5mm; }
+  .info p { margin: 0; font-size: 12pt; }
+  .note { margin-top: 9mm; padding: 5mm 6mm; border-left: 2px solid var(--clay); background: #fff; font-size: 11pt; color: var(--muted); }
+  .note b { font-weight: 500; color: var(--clay); }
+  .footer { position: absolute; left: 20mm; right: 20mm; bottom: 10mm; display: flex; justify-content: space-between; font-size: 8pt; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); }
+
+  /* back page */
+  .back { background: var(--forest); color: var(--sand); }
+  .back .frame { border-color: rgba(239,230,216,.35); }
+  .back-inner { position: absolute; inset: 12mm; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20mm; }
+  .back img { width: 52mm; height: 52mm; object-fit: cover; border-radius: 50%; margin-bottom: 9mm; border: 2px solid rgba(239,230,216,.4); }
+  .back h2 { font-size: 34pt; line-height: 1.1; margin: 0 0 7mm; }
+  .back h2 em { color: #f1c79b; }
+  .back p { max-width: 125mm; margin: 0 0 4mm; }
+  .back .rule { width: 40mm; height: 1px; background: rgba(239,230,216,.4); margin: 6mm 0; }
+  .back .site { font-family: "Cormorant Garamond", serif; font-size: 20pt; color: #fff; text-decoration: none; }
+  .back p.disclaimer { max-width: none; margin: 0; position: absolute; bottom: 20mm; left: 25mm; right: 25mm; font-size: 7.5pt; color: rgba(239,230,216,.6); text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- 1. Cover -->
+<section class="page cover">
+  <div class="frame"></div>
+  <div class="cover-inner">
+    <div class="brand serif">Ameniti Flow</div>
+    <h1 class="serif">
+      <span lang="pl">Wróć do siebie<br><em>z każdym oddechem</em></span>
+      <span lang="en">Come home to yourself<br><em>with every breath</em></span>
+    </h1>
+    <p class="sub">
+      <span lang="pl">3 praktyki oddechowe z jogi kundalini - na spokój, energię i równowagę. Na trudniejszy dzień, ważną rozmowę, przerwę od ekranu albo wieczór przed snem.</span>
+      <span lang="en">3 breathing practices from Kundalini yoga - for calm, energy and balance. For a harder day, an important conversation, a break from the screen or the evening before sleep.</span>
+    </p>
+    <div class="eyebrow">Aleksandra Migała</div>
+  </div>
+</section>
+
+<!-- 2. Long deep breathing -->
+<section class="page ex">
+  <div class="num serif">01</div>
+  <div class="eyebrow"><span lang="pl">Na spokój</span><span lang="en">For calm</span></div>
+  <h2 class="serif"><span lang="pl">Długi, głęboki oddech</span><span lang="en">Long deep breathing</span></h2>
+  <p class="name"><span lang="pl">Long Deep Breathing</span><span lang="en">Kundalini yoga</span></p>
+  <p class="intro">
+    <span lang="pl">Najprostsza i najważniejsza praktyka oddechowa w jodze kundalini. Spowalnia oddech, uspokaja układ nerwowy i pozwala w kilka minut przejść z trybu „walcz lub uciekaj” w tryb odpoczynku.</span>
+    <span lang="en">The simplest and most essential breathing practice in Kundalini yoga. It slows the breath, calms the nervous system and helps you shift from “fight or flight” into rest within minutes.</span>
+  </p>
+  <ol class="steps">
+    <li><span lang="pl"><b>Usiądź prosto</b> - na krześle lub poduszce, z wyprostowanym kręgosłupem. Zamknij oczy.</span><span lang="en"><b>Sit up straight</b> - on a chair or cushion, with a long spine. Close your eyes.</span></li>
+    <li><span lang="pl"><b>Wdech przez nos</b> - najpierw napełnij brzuch, potem żebra, na końcu klatkę piersiową.</span><span lang="en"><b>Inhale through the nose</b> - fill the belly first, then the ribs, and finally the chest.</span></li>
+    <li><span lang="pl"><b>Wydech przez nos</b> - w odwrotnej kolejności: klatka, żebra, a na końcu delikatnie wciągnij pępek.</span><span lang="en"><b>Exhale through the nose</b> - in reverse: chest, ribs, and finally gently draw the navel in.</span></li>
+    <li><span lang="pl"><b>Zwalniaj</b> - z każdym oddechem wydłużaj wdech i wydech. Oddech ma być płynny jak fala.</span><span lang="en"><b>Slow down</b> - let each inhale and exhale grow longer. The breath should flow like a wave.</span></li>
+  </ol>
+  <div class="diagram">
+    <svg width="230" height="80" viewBox="0 0 230 80" fill="none" stroke="#1f2a1e" stroke-width="1.5">
+      <path d="M5 60 C 40 60, 60 15, 115 15 S 190 60, 225 60" />
+      <circle cx="35" cy="57" r="3.5" fill="#b8652f" stroke="none"/>
+      <circle cx="75" cy="27" r="3.5" fill="#b8652f" stroke="none"/>
+      <circle cx="115" cy="15" r="3.5" fill="#b8652f" stroke="none"/>
+      <g font-family="Jost" font-size="8" fill="#6d6458" stroke="none" letter-spacing="1">
+        <text x="20" y="76" lang="pl">BRZUCH</text><text x="62" y="44" lang="pl">ŻEBRA</text><text x="96" y="8" lang="pl">KLATKA</text>
+        <text x="25" y="76" lang="en">BELLY</text><text x="66" y="44" lang="en">RIBS</text><text x="100" y="8" lang="en">CHEST</text>
+        <text x="150" y="76" lang="pl">WYDECH →</text><text x="150" y="76" lang="en">EXHALE →</text>
+      </g>
+    </svg>
+    <div class="time"><small><span lang="pl">Czas</span><span lang="en">Time</span></small><span lang="pl">3-11 minut</span><span lang="en">3-11 minutes</span></div>
+  </div>
+  <div class="info">
+    <div>
+      <h3><span lang="pl">Kiedy</span><span lang="en">When</span></h3>
+      <p><span lang="pl">Gdy czujesz napięcie lub niepokój, przed ważnym spotkaniem, po intensywnym dniu i przed snem.</span><span lang="en">When you feel tense or anxious, before an important meeting, after an intense day and before sleep.</span></p>
+    </div>
+    <div>
+      <h3><span lang="pl">Efekty</span><span lang="en">Benefits</span></h3>
+      <p><span lang="pl">Wycisza umysł, rozluźnia ciało, dotlenia organizm i pomaga odzyskać jasność myślenia.</span><span lang="en">Quiets the mind, relaxes the body, brings in more oxygen and helps restore mental clarity.</span></p>
+    </div>
+  </div>
+  <p class="note"><b><span lang="pl">Wskazówka:</span><span lang="en">Tip:</span></b>
+    <span lang="pl">Połóż jedną dłoń na brzuchu, a drugą na klatce piersiowej. Poczujesz, jak oddech przepływa przez ciało falą - od dołu do góry i z powrotem.</span>
+    <span lang="en">Place one hand on your belly and the other on your chest. You'll feel the breath move through the body like a wave - from bottom to top and back again.</span>
+  </p>
+  <div class="footer"><span>Ameniti Flow</span><span>01 / 03</span></div>
+</section>
+
+<!-- 3. Breath of fire -->
+<section class="page ex">
+  <div class="num serif">02</div>
+  <div class="eyebrow"><span lang="pl">Na energię</span><span lang="en">For energy</span></div>
+  <h2 class="serif"><span lang="pl">Oddech ognia</span><span lang="en">Breath of fire</span></h2>
+  <p class="name"><span lang="pl">Breath of Fire</span><span lang="en">Kundalini yoga</span></p>
+  <p class="intro">
+    <span lang="pl">Szybki, rytmiczny oddech napędzany ruchem pępka. Budzi ciało i umysł - działa jak naturalna kawa, bez spadku energii po godzinie.</span>
+    <span lang="en">A fast, rhythmic breath powered by the navel. It wakes up body and mind - like a natural coffee, without the crash an hour later.</span>
+  </p>
+  <ol class="steps">
+    <li><span lang="pl"><b>Usiądź prosto</b> - rozluźnij ramiona i twarz, zamknij oczy.</span><span lang="en"><b>Sit up straight</b> - relax your shoulders and face, close your eyes.</span></li>
+    <li><span lang="pl"><b>Oddychaj tylko przez nos</b> - szybko i rytmicznie, około 2-3 oddechy na sekundę.</span><span lang="en"><b>Breathe only through the nose</b> - quickly and rhythmically, about 2-3 breaths per second.</span></li>
+    <li><span lang="pl"><b>Na wydechu</b> - energicznie przyciągnij pępek do kręgosłupa.</span><span lang="en"><b>On the exhale</b> - pull the navel firmly towards the spine.</span></li>
+    <li><span lang="pl"><b>Na wdechu</b> - rozluźnij brzuch, powietrze wpłynie samo. Wdech i wydech są równe.</span><span lang="en"><b>On the inhale</b> - relax the belly and let the air flow in by itself. Inhale and exhale are equal.</span></li>
+  </ol>
+  <div class="diagram">
+    <svg width="230" height="80" viewBox="0 0 230 80" fill="none" stroke="#1f2a1e" stroke-width="1.5">
+      <path d="M5 40 L20 18 L35 62 L50 18 L65 62 L80 18 L95 62 L110 18 L125 62 L140 18 L155 62 L170 18 L185 62 L200 18 L215 62 L225 40" stroke-linejoin="round"/>
+      <g font-family="Jost" font-size="8" fill="#6d6458" stroke="none" letter-spacing="1">
+        <text x="5" y="10" lang="pl">WDECH</text><text x="5" y="78" lang="pl">WYDECH - PĘPEK DO KRĘGOSŁUPA</text>
+        <text x="5" y="10" lang="en">INHALE</text><text x="5" y="78" lang="en">EXHALE - NAVEL TO SPINE</text>
+      </g>
+    </svg>
+    <div class="time"><small><span lang="pl">Czas</span><span lang="en">Time</span></small><span lang="pl">30 sekund<br>do 3 minut</span><span lang="en">30 seconds<br>to 3 minutes</span></div>
+  </div>
+  <div class="info">
+    <div>
+      <h3><span lang="pl">Kiedy</span><span lang="en">When</span></h3>
+      <p><span lang="pl">Rano, w popołudniowym spadku energii, przed wysiłkiem umysłowym. Na pusty żołądek. Nie przed snem.</span><span lang="en">In the morning, during the afternoon slump, before demanding mental work. On an empty stomach. Not before sleep.</span></p>
+    </div>
+    <div>
+      <h3><span lang="pl">Efekty</span><span lang="en">Benefits</span></h3>
+      <p><span lang="pl">Dodaje energii, poprawia koncentrację, rozgrzewa ciało i wzmacnia mięśnie brzucha.</span><span lang="en">Boosts energy, sharpens focus, warms the body and strengthens the core.</span></p>
+    </div>
+  </div>
+  <p class="note"><b><span lang="pl">Uwaga:</span><span lang="en">Note:</span></b>
+    <span lang="pl">Zacznij od 30 sekund. Jeśli zakręci Ci się w głowie - zatrzymaj się i wróć do spokojnego oddechu. Nie praktykuj w ciąży, w czasie menstruacji, przy nadciśnieniu, chorobach serca lub padaczce - wybierz wtedy długi, głęboki oddech.</span>
+    <span lang="en">Start with 30 seconds. If you feel dizzy, stop and return to calm breathing. Don't practise during pregnancy, menstruation, or with high blood pressure, heart conditions or epilepsy - choose long deep breathing instead.</span>
+  </p>
+  <div class="footer"><span>Ameniti Flow</span><span>02 / 03</span></div>
+</section>
+
+<!-- 4. Alternate nostril -->
+<section class="page ex">
+  <div class="num serif">03</div>
+  <div class="eyebrow"><span lang="pl">Na równowagę</span><span lang="en">For balance</span></div>
+  <h2 class="serif"><span lang="pl">Oddech naprzemienny</span><span lang="en">Alternate nostril breathing</span></h2>
+  <p class="name">Nadi Shodhana</p>
+  <p class="intro">
+    <span lang="pl">Oddychanie na zmianę lewą i prawą dziurką nosa. Porządkuje natłok myśli i przywraca wewnętrzną równowagę, gdy jest Ci „za dużo”.</span>
+    <span lang="en">Breathing through the left and right nostril in turn. It clears racing thoughts and restores inner balance when everything feels like “too much”.</span>
+  </p>
+  <ol class="steps">
+    <li><span lang="pl"><b>Przygotuj dłoń</b> - prawy kciuk zamyka prawą dziurkę nosa, palec serdeczny lewą.</span><span lang="en"><b>Prepare your hand</b> - the right thumb closes the right nostril, the ring finger the left.</span></li>
+    <li><span lang="pl"><b>Zamknij prawą</b> - zrób spokojny wdech lewą dziurką.</span><span lang="en"><b>Close the right</b> - take a slow inhale through the left nostril.</span></li>
+    <li><span lang="pl"><b>Zamknij lewą</b> - wydech prawą, a potem wdech prawą.</span><span lang="en"><b>Close the left</b> - exhale through the right, then inhale through the right.</span></li>
+    <li><span lang="pl"><b>Zamknij prawą</b> - wydech lewą. To jeden cykl. Kontynuuj w swoim tempie.</span><span lang="en"><b>Close the right</b> - exhale through the left. That's one cycle. Continue at your own pace.</span></li>
+  </ol>
+  <div class="diagram">
+    <svg width="230" height="80" viewBox="0 0 230 80" fill="none" stroke="#1f2a1e" stroke-width="1.5">
+      <circle cx="40" cy="40" r="24"/><circle cx="190" cy="40" r="24"/>
+      <path d="M72 32 H158" marker-end="url(#a)"/><path d="M158 48 H72" marker-end="url(#a)"/>
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#b8652f" stroke="none"/></marker></defs>
+      <g font-family="Jost" font-size="7.5" fill="#6d6458" stroke="none" letter-spacing="1" text-anchor="middle">
+        <text x="40" y="43" lang="pl">LEWA</text><text x="190" y="43" lang="pl">PRAWA</text>
+        <text x="40" y="43" lang="en">LEFT</text><text x="190" y="43" lang="en">RIGHT</text>
+        <text x="115" y="24" lang="pl">WDECH · WYDECH</text><text x="115" y="64" lang="pl">WYDECH · WDECH</text>
+        <text x="115" y="24" lang="en">INHALE · EXHALE</text><text x="115" y="64" lang="en">EXHALE · INHALE</text>
+      </g>
+    </svg>
+    <div class="time"><small><span lang="pl">Czas</span><span lang="en">Time</span></small><span lang="pl">5-10 cykli<br>lub 3 minuty</span><span lang="en">5-10 cycles<br>or 3 minutes</span></div>
+  </div>
+  <div class="info">
+    <div>
+      <h3><span lang="pl">Kiedy</span><span lang="en">When</span></h3>
+      <p><span lang="pl">O każdej porze dnia - gdy myśli gonią jedna drugą, w przerwie od komputera, przed nauką lub snem.</span><span lang="en">Any time of day - when your thoughts are racing, during a screen break, before studying or sleep.</span></p>
+    </div>
+    <div>
+      <h3><span lang="pl">Efekty</span><span lang="en">Benefits</span></h3>
+      <p><span lang="pl">Uspokaja, równoważy emocje, poprawia koncentrację i pomaga poczuć się bardziej „poukładanym”.</span><span lang="en">Calms, balances emotions, improves focus and helps you feel more grounded.</span></p>
+    </div>
+  </div>
+  <p class="note"><b><span lang="pl">Wskazówka:</span><span lang="en">Tip:</span></b>
+    <span lang="pl">Nie wstrzymuj oddechu na siłę i nie spiesz się. Jeśli nos jest zatkany, oddychaj spokojnie przez obie dziurki - praktyka nadal będzie działać.</span>
+    <span lang="en">Don't force the breath or rush. If your nose is blocked, breathe calmly through both nostrils - the practice will still work.</span>
+  </p>
+  <div class="footer"><span>Ameniti Flow</span><span>03 / 03</span></div>
+</section>
+
+<!-- 5. Back -->
+<section class="page back">
+  <div class="frame"></div>
+  <div class="back-inner">
+    <img src="../images/aleksandra.jpg" alt="">
+    <h2 class="serif">
+      <span lang="pl">Oddychaj. Płyń.<br><em>Wracaj do siebie.</em></span>
+      <span lang="en">Breathe. Flow.<br><em>Come back to yourself.</em></span>
+    </h2>
+    <p>
+      <span lang="pl">Jeśli chcesz pogłębić swoją praktykę, zapraszam Cię na zajęcia jogi kundalini, sesje oddechowe i warsztaty.</span>
+      <span lang="en">If you'd like to deepen your practice, join me for Kundalini yoga classes, breathwork sessions and workshops.</span>
+    </p>
+    <div class="rule"></div>
+    <a class="site" href="https://amenitiflow.com">amenitiflow.com</a>
+  </div>
+  <p class="disclaimer">
+    <span lang="pl">Ćwiczenia mają charakter wspierający i nie zastępują porady lekarskiej. Praktykuj w swoim tempie i słuchaj swojego ciała.</span>
+    <span lang="en">These exercises are supportive and do not replace medical advice. Practise at your own pace and listen to your body.</span>
+  </p>
+</section>
+
+<script>
+  const p = new URLSearchParams(location.search).get('lang');
+  if (p) document.documentElement.lang = p;
+</script>
+</body>
+</html>
