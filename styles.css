@@ -238,6 +238,17 @@ section { padding: clamp(4rem, 9vw, 7rem) clamp(1rem, 5vw, 4rem); }
   font-size: clamp(1.7rem, 3.6vw, 2.6rem);
   font-style: italic;
 }
+.quote blockquote p { margin: 0; }
+.quote cite {
+  display: block;
+  margin-top: 1.4rem;
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: .85rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: #f6e3c8;
+}
 
 /* about */
 .about {
