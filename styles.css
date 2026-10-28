@@ -182,36 +182,29 @@ h3 { font-size: 1.7rem; margin: 0 0 .5rem; }
 }
 .pt-hand {
   position: absolute;
-  left: -27cqw;
-  top: -23cqw;
+  left: -30cqw;
+  top: -26cqw;
+  padding: 3cqw;
   transform: rotate(-8deg);
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6)) drop-shadow(0 2px 12px rgba(0, 0, 0, .55));
-  /* live handwriting: ink appears left to right */
-  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 52%);
-  mask-image: linear-gradient(90deg, #000 40%, transparent 52%);
-  -webkit-mask-size: 250% 100%;
-  mask-size: 250% 100%;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: 100% 0;
-  mask-position: 100% 0;
+  /* live handwriting: the word is revealed left to right */
+  clip-path: inset(0 100% 0 0);
+  -webkit-clip-path: inset(0 100% 0 0);
   animation: pt-write 2.8s cubic-bezier(.45, .05, .55, .95) .6s forwards;
 }
 .pt-ink {
   display: block;
   width: 56cqw;
-  aspect-ratio: 815 / 328;
-  background: linear-gradient(100deg, #fde9cc 0%, #f3c38c 55%, #e5a064 100%);
-  -webkit-mask: url("images/ameniti-hand.png") no-repeat 0 0 / contain;
-  mask: url("images/ameniti-hand.png") no-repeat 0 0 / contain;
+  height: auto;
+  max-width: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .6)) drop-shadow(0 2px 12px rgba(0, 0, 0, .55));
 }
 @keyframes pt-write {
-  to { -webkit-mask-position: 0 0; mask-position: 0 0; }
+  to { clip-path: inset(0 0 0 0); -webkit-clip-path: inset(0 0 0 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pt-hand { animation: none; -webkit-mask-image: none; mask-image: none; }
+  .pt-hand { animation: none; clip-path: none; -webkit-clip-path: none; }
 }
-.hero-image img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.hero-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 
 /* offerings */
 section { padding: clamp(4rem, 9vw, 7rem) clamp(1rem, 5vw, 4rem); }
@@ -296,7 +289,7 @@ section { padding: clamp(4rem, 9vw, 7rem) clamp(1rem, 5vw, 4rem); }
   .links { display: none; }
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero-image { order: -1; }
-  .hero-image img { position: static; height: auto; max-height: 75vh; }
+  .hero-image > img { position: static; height: auto; max-height: 75vh; }
   .cards { grid-template-columns: 1fr; max-width: 480px; }
   .about { grid-template-columns: 1fr; }
   .about img { max-width: 340px; margin: 0 auto; }
