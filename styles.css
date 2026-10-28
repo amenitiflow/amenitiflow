@@ -137,11 +137,9 @@ h3 { font-size: 1.7rem; margin: 0 0 .5rem; }
 }
 .pt-small {
   display: block;
-  font-family: var(--sans);
-  font-style: italic;
-  font-weight: 400;
-  font-size: 3.8cqw;
-  letter-spacing: .06em;
+  font-family: "Italiana", var(--serif);
+  font-size: 4.6cqw;
+  letter-spacing: .14em;
   text-transform: uppercase;
 }
 .pt-big {
@@ -163,12 +161,13 @@ h3 { font-size: 1.7rem; margin: 0 0 .5rem; }
 .pt-hand {
   position: absolute;
   left: 50%;
-  bottom: 15cqw;
-  transform: translateX(-45%) rotate(-7deg);
-  font-family: "Mrs Saint Delafield", cursive;
-  font-size: 15cqw;
+  bottom: 10.5cqw;
+  transform: translateX(-45%) rotate(-6deg);
+  font-family: "Italianno", cursive;
+  font-size: 17cqw;
+  line-height: 1;
   white-space: nowrap;
-  padding: 0 .2em;
+  padding: .15em .35em .25em .5em;
   background: linear-gradient(100deg, #fde9cc 0%, #f3c38c 55%, #e5a064 100%);
   -webkit-background-clip: text;
   background-clip: text;
