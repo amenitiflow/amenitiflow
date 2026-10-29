@@ -1,6 +1,16 @@
-// Language: saved choice → browser language → Polish
+// Language: saved choice → first Polish or English language in the browser's preferences → English
+function detectLang() {
+  const prefs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ''];
+  for (const l of prefs) {
+    const code = l.toLowerCase().slice(0, 2);
+    if (code === 'pl' || code === 'en') return code;
+  }
+  return 'en';
+}
+
 function setLang(lang) {
   document.documentElement.lang = lang;
+  document.querySelectorAll('input[name="language"]').forEach(i => i.value = lang);
   document.querySelectorAll('[data-set-lang]').forEach(b =>
     b.classList.toggle('active', b.dataset.setLang === lang));
   document.querySelectorAll('option[data-' + lang + ']').forEach(o =>
@@ -12,7 +22,7 @@ function store(key, value) {
   try { return value === undefined ? localStorage.getItem(key) : localStorage.setItem(key, value); } catch (e) {}
 }
 
-setLang(store('lang') || (navigator.language.startsWith('pl') ? 'pl' : 'en'));
+setLang(store('lang') || detectLang());
 
 document.querySelectorAll('[data-set-lang]').forEach(b =>
   b.addEventListener('click', () => setLang(b.dataset.setLang)));
