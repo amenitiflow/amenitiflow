@@ -233,7 +233,7 @@ section { padding: clamp(4rem, 9vw, 7rem) clamp(1rem, 5vw, 4rem); }
 .quote blockquote {
   position: relative;
   margin: 0 auto;
-  max-width: 46rem;
+  max-width: 60rem;
   color: #fff;
   font-size: clamp(1.7rem, 3.6vw, 2.6rem);
   font-style: italic;
